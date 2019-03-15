@@ -1,0 +1,33 @@
+{
+  "name": "fastify-organizer",
+  "version": "0.1.0",
+  "description": "Fastify file structure organizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trixden/fastify-organizer.git"
+  },
+  "keywords": [
+    "fastify",
+    "typescript",
+    "file",
+    "organization"
+  ],
+  "author": "Denis Karimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trixden/fastify-organizer/issues"
+  },
+  "homepage": "https://github.com/trixden/fastify-organizer#readme",
+  "dependencies": {
+    "glob": "7.1.3",
+    "steed": "1.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "11.11.3",
+    "fastify": "2.0.1"
+  }
+}
