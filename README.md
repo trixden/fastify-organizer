@@ -145,17 +145,17 @@ export = (fastify: fastify.FastifyInstance<Server, IncomingMessage, ServerRespon
 }
 ```
 
-Or using classes:
+**Or using classes:**
 
 *using `javascript`*:
 ```javascript
 module.exports = class {
     constructor(fastify) {
         this.fastify = fastify;
+        this.url = '/jsclass';
+        this.method = 'GET';
+        this.schema = {};
     }
-    url = '/articles';
-    method = 'GET';
-    schema = {...};
 
     async handler(req, res) {
         ...
