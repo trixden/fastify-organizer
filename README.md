@@ -171,8 +171,9 @@ import { Server, IncomingMessage, ServerResponse } from 'http';
 export = class implements RouteOptions<Server, IncomingMessage, ServerResponse> {
   constructor(private fastify: FastifyInstance<Server, IncomingMessage, ServerResponse>) {}
 
-  url = '/test/test1';
-  method: HTTPMethod = 'GET';
+  readonly url = '/tsclass';
+  readonly method: HTTPMethod = 'GET';
+  readonly schema = {}
 
   async handler(req, res) {
     ...
