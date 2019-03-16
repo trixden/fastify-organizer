@@ -2,9 +2,11 @@
   "name": "fastify-organizer",
   "version": "0.1.0",
   "description": "Fastify file structure organizer",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "tsc --project tsconfig.json --watch",
+    "build": "tsc --project tsconfig.json",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -27,7 +29,9 @@
     "steed": "1.1.3"
   },
   "devDependencies": {
+    "@types/glob": "7.1.1",
     "@types/node": "11.11.3",
-    "fastify": "2.0.1"
+    "fastify": "2.0.1",
+    "typescript": "^3.3.3333"
   }
 }
