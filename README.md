@@ -10,6 +10,7 @@
     * [Routes](#routes)
     * [Decorators](#decorators)
     * [Hooks](#hooks)
+    * [Plugins](#plugins)
 
 # Why is this library need
 
@@ -79,39 +80,6 @@ These options are used when registering the plugin.
 
 ## Routes
 
-### Register plugin
-
-*using `javascript`:*
-```javascript
-const path = require('path');
-const fastify = require('fastify');
-const Organizer = require('fastify-organizer');
-
-const server = fastify();
-
-server.register(Organizer, {
-    type: 'routes',
-    dir: path.join(__dirname, 'routes'),
-    ignorePattern: /.*\.test\.(ts | js)$/
-});
-```
-
-*using `typescript`:*
-```typescript
-import path from 'path';
-import * as fastify from 'fastify'
-import * as fastifyOrganizer from 'fastify-organizer';
-
-const server = fastify();
-
-server.register(Organizer, {
-    type: 'routes',
-    dir: path.join(__dirname, 'src/routes'),
-    prodDir: path.join(__dirname, 'dist/routes'),
-    ignorePattern: /.*\.test\.(ts | js)$/
-});
-```
-
 ### Creating files
 
 Routing files are created according to the specification of the [full declaration](https://www.fastify.io/docs/v2.1.x/Routes/#full-declaration).
@@ -148,36 +116,6 @@ export = (fastify: fastify.FastifyInstance<Server, IncomingMessage, ServerRespon
 ```
 
 ## Decorators
-
-### Register plugin
-
-*using `javascript`:*
-```javascript
-const path = require('path');
-const fastify = require('fastify');
-const Organizer = require('fastify-organizer');
-
-const server = fastify();
-
-server.register(Organizer, {
-    type: 'decorators',
-    dir: path.join(__dirname, 'decorators')
-});
-```
-
-*using `typescript`:*
-```typescript
-import path from 'path';
-import * as fastify from 'fastify'
-import * as fastifyOrganizer from 'fastify-organizer';
-
-const server = fastify();
-
-server.register(Organizer, {
-    type: 'decorators',
-    dir: path.join(__dirname, 'src/decorators')
-});
-```
 
 ### Additional options
 
@@ -219,36 +157,6 @@ export default config;
 
 ## Hooks
 
-### Register plugin
-
-*using `javascript`:*
-```javascript
-const path = require('path');
-const fastify = require('fastify');
-const Organizer = require('fastify-organizer');
-
-const server = fastify();
-
-server.register(Organizer, {
-    type: 'hooks',
-    dir: path.join(__dirname, 'decorators')
-});
-```
-
-*using `typescript`:*
-```typescript
-import path from 'path';
-import * as fastify from 'fastify'
-import * as fastifyOrganizer from 'fastify-organizer';
-
-const server = fastify();
-
-server.register(Organizer, {
-    type: 'hooks',
-    dir: path.join(__dirname, 'src/decorators')
-});
-```
-
 ### Additional options
 
 These parameters are passed along with the export of the hook. See example below.
@@ -281,3 +189,43 @@ const hook: fastify.FastifyMiddleware<Server, IncomingMessage, ServerResponse> =
 
 export default hook;
 ```
+
+## Plugins
+
+### Additional options
+
+| Name | Required? | Type | Description |
+|------|-----------|------|-------------|
+| `opts` | - | object | Default options of [fastify plugin](https://www.fastify.io/docs/v2.1.x/Plugins/) |
+
+### Creating files
+
+*using `javascript`:*
+```javascript
+exports.opts = {
+  routePrefix: '/articles'
+};
+
+exports.default = function (request, reply, next) {
+  ...
+  next();
+};
+```
+
+*using `typescript`:*
+```typescript
+import {Plugin}  from "fastify";
+import { Server, IncomingMessage, ServerResponse } from "http";
+
+export const opts = {
+  prefix: '/articles'
+};
+
+const plugin: Plugin<Server, IncomingMessage, ServerResponse, {}> = (fastify, opts, next) => {
+  ...
+  next();
+};
+
+export default plugin;
+```
+
