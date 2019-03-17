@@ -1,5 +1,3 @@
-> # This library is not completed.
-
 * [Why is this library need](#why-is-this-library-need)
 * [Requirements](#requirements)
 * [Getting started](#getting-started)
@@ -257,6 +255,32 @@ exports.default = function (reqest, done) {
   jsoffParser(request, function (err, body) {
     done(err, body)
   });
+};
+```
+
+*using `typescript`:*
+```typescript
+import {ContentTypeParser, FastifyRequest} from "fastify";
+import {IncomingMessage} from "http";
+
+export const type = 'application/jsoff';
+
+const parser: ContentTypeParser<FastifyRequest<IncomingMessage>> = function (request, done) {
+  done(null, request.body)
+}
+
+export default parser;
+```
+
+## Middlewares
+
+### Creating files
+
+*using `javascript`:*
+```javascript
+exports.default = function (reqest, reply, next) {
+  ...
+  next();
 };
 ```
 

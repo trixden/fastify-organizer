@@ -40,7 +40,11 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
           }
           break;
         case 'middlewares':
-          fastify.use(plugin(fastify))
+          if (plugin.url) {
+            fastify.use(plugin.url, plugin.default);
+          } else {
+            fastify.use(plugin.default);
+          }
           break;
         case 'hooks':
           fastify.addHook(plugin.event, plugin.default);
@@ -52,11 +56,6 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
           fastify.addContentTypeParser(plugin.type, plugin.opts);
           break;
         default:
-          if (plugin.url) {
-            fastify.use(plugin.url, plugin.default);
-          } else {
-            fastify.use(plugin.default);
-          }
           break;
       }
     }
