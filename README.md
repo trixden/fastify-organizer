@@ -287,14 +287,13 @@ exports.default = function (reqest, reply, next) {
 
 *using `typescript`:*
 ```typescript
-import {ContentTypeParser, FastifyRequest} from "fastify";
-import {IncomingMessage} from "http";
+import { FastifyMiddleware } from "fastify";
+import { Server, IncomingMessage, ServerResponse } from "http";
 
-export const type = 'application/jsoff';
-
-const parser: ContentTypeParser<FastifyRequest<IncomingMessage>> = function (request, done) {
-  done(null, request.body)
+const mware: FastifyMiddleware<Server, IncomingMessage, ServerResponse> = function (request, reply, next) {
+  ...
+  next()
 }
 
-export default parser;
+export default mware;
 ```
