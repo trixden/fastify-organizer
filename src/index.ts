@@ -22,9 +22,11 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
 
       const plugin = require(file);
 
+      if (plugin.autoload !== undefined && plugin.autoload !== true) continue;
+
       switch (opts.type) {
         case 'routes':
-          fastify.route(plugin(fastify));
+          fastify.route(plugin.default(fastify));
           break;
         case 'decorators':
           if (plugin.target === 'request') {
@@ -50,6 +52,11 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
           fastify.addContentTypeParser(plugin.type, plugin.opts);
           break;
         default:
+          if (plugin.url) {
+            fastify.use(plugin.url, plugin.default);
+          } else {
+            fastify.use(plugin.default);
+          }
           break;
       }
     }

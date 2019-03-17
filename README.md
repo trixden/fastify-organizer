@@ -79,6 +79,13 @@ These options are used when registering the plugin.
 
 # Types of structures
 
+All files have several required parameters. These parameters are what you need to export from the file.
+
+| Name | Required | Type | Description |
+|------|----------|------|-------------|
+| `default` | **+** | any | The main entity to be connected. Each file type has its own specifics. Read about the types below.
+| `autoload` | - | boolean | If the value is `false`, the file will not be connected. If no value is specified, the file will be connected anyway.
+
 ## Routes
 
 ### Creating files
@@ -87,32 +94,34 @@ Routing files are created according to the specification of the [full declaratio
 
 *using `javascript`:*
 ```javascript
-module.exports = fastify => {
-    return {
-        url: '/articles',
-        method: 'GET'
-        schema: {...},
-        async handler(request, reply) {
-            ...
-        }
+exports.default = fastify => {
+  return {
+    url: '/articles',
+    method: 'GET'
+    schema: {...},
+    async handler(request, reply) {
+        ...
     }
+  }
 }
 ```
 
 *using `typescript`:*
 ```typescript
-import * as fastify from 'fastify';
+import { FastifyInstance, RouteOptions } from 'fastify';
 import { Server, IncomingMessage, ServerResponse } from 'http';
 
-export = (fastify: fastify.FastifyInstance<Server, IncomingMessage, ServerResponse>) => {
-    return {
-        url: '/articles',
-        method: 'GET'
-        schema: {...},
-        async handler(request, reply) {
-            ...
-        }
+export default (fastify: FastifyInstance<Server, IncomingMessage, ServerResponse>) => {
+  const router: RouteOptions<Server, IncomingMessage, ServerResponse> = {
+    url: '/articles',
+    method: 'GET'
+    schema: {...},
+    async handler(request, reply) {
+        ...
     }
+  }
+
+  return router;
 }
 ```
 
