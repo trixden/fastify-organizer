@@ -11,6 +11,7 @@
     * [Decorators](#decorators)
     * [Hooks](#hooks)
     * [Plugins](#plugins)
+    * [Content type parsers](#content-type-parsers)
 
 # Why is this library need
 
@@ -229,3 +230,37 @@ const plugin: Plugin<Server, IncomingMessage, ServerResponse, {}> = (fastify, op
 export default plugin;
 ```
 
+## Content type parsers
+
+### Additional options
+
+| Name | Required? | Type | Description |
+|------|-----------|------|-------------|
+| `type` | **+** | string or array | Type or array of types of the added parser |
+
+### Creating files
+
+*using `javascript`:*
+```javascript
+exports.type = 'application/jsoff';
+
+exports.default = function (reqest, done) {
+  jsoffParser(request, function (err, body) {
+    done(err, body)
+  });
+};
+```
+
+*using `typescript`:*
+```typescript
+import {ContentTypeParser, FastifyRequest} from "fastify";
+import {IncomingMessage} from "http";
+
+export const type = 'application/jsoff';
+
+const parser: ContentTypeParser<FastifyRequest<IncomingMessage>> = function (request, done) {
+  done(null, request.body)
+}
+
+export default parser;
+```
