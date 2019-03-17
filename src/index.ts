@@ -24,11 +24,7 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
 
       switch (opts.type) {
         case 'routes':
-          try {
-            fastify.route(new plugin(fastify));
-          } catch(err) {
-            fastify.route(plugin(fastify));
-          }
+          fastify.route(plugin(fastify));
           break;
         case 'decorators':
           if (plugin.target === 'request') {

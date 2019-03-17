@@ -1,4 +1,4 @@
-> # This library is not be completed.
+> # This library is not completed.
 
 * [Why is this library need](#why-is-this-library-need)
 * [Requirements](#requirements)
