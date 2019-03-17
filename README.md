@@ -30,6 +30,12 @@ Install `fastify-organizer` package via NPM:
 npm install --save fastify-organizer
 ```
 
+Or via Yarn:
+
+```
+yarn add fastify-organizer
+```
+
 ## Usage
 
 Import `fastify-organizer` into your project and connect it to your fastify instance as plugin:
