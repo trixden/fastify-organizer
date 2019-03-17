@@ -9,6 +9,7 @@
 * [Types of structures](#types-of-structures)
     * [Routes](#routes)
     * [Decorators](#decorators)
+    * [Hooks](#hooks)
 
 # Why is this library need
 
@@ -216,9 +217,9 @@ export const target = undefined; // Or just do not define this variable.
 export default config;
 ```
 
-# Hooks
+## Hooks
 
-## Register plugin
+### Register plugin
 
 *using `javascript`:*
 ```javascript
