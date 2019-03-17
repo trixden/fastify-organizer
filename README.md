@@ -203,7 +203,7 @@ export default hook;
 *using `javascript`:*
 ```javascript
 exports.opts = {
-  routePrefix: '/articles'
+  prefix: '/articles'
 };
 
 exports.default = function (request, reply, next) {
