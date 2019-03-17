@@ -8,6 +8,7 @@
 * [Plugin options](#plugin-options)
 * [Types of structures](#types-of-structures)
     * [Routes](#routes)
+    * [Decorators](#decorators)
 
 # Why is this library need
 
@@ -145,38 +146,72 @@ export = (fastify: fastify.FastifyInstance<Server, IncomingMessage, ServerRespon
 }
 ```
 
-**Or using classes:**
+## Decorators
 
-*using `javascript`*:
+### Register plugin
+
+*using `javascript`:*
 ```javascript
-module.exports = class {
-    constructor(fastify) {
-        this.fastify = fastify;
-        this.url = '/jsclass';
-        this.method = 'GET';
-        this.schema = {};
-    }
+const path = require('path');
+const fastify = require('fastify');
+const Organizer = require('fastify-organizer');
 
-    async handler(req, res) {
-        ...
-    }
-}
+const server = fastify();
+
+server.register(Organizer, {
+    type: 'decorators',
+    dir: path.join(__dirname, 'decorators/request')
+});
 ```
 
 *using `typescript`:*
 ```typescript
-import {FastifyInstance, RouteOptions, HTTPMethod} from 'fastify';
-import { Server, IncomingMessage, ServerResponse } from 'http';
+import path from 'path';
+import * as fastify from 'fastify'
+import * as fastifyOrganizer from 'fastify-organizer';
 
-export = class implements RouteOptions<Server, IncomingMessage, ServerResponse> {
-  constructor(private fastify: FastifyInstance<Server, IncomingMessage, ServerResponse>) {}
+const server = fastify();
 
-  readonly url = '/tsclass';
-  readonly method: HTTPMethod = 'GET';
-  readonly schema = {}
+server.register(Organizer, {
+    type: 'decorators',
+    dir: path.join(__dirname, 'src/decorators/request')
+});
+```
 
-  async handler(req, res) {
-    ...
+### Additional options
+
+These parameters are passed along with the export of the decorator. See example below.
+
+| Name | Required? | Type | Description |
+|------|-----------|------|-------------|
+| `name` | **+** | string | Property name to be added |
+| `target` | - | string (may be one of `request` or `response`) | Defines which entity should be decorated. If the target property is not passed, the global fastify object will be decorated. |
+
+### Creating files
+
+For example, let's connect the configuration object from the `config` library to the global object `fastify`
+
+*using `javascript`:*
+```javascript
+const config = require('config');
+
+exports.name = 'config';
+exports.target = undefined; // Or just do not define this variable.
+exports.default = config;
+```
+
+*using `typescript`:*
+```typescript
+import * as config from 'config';
+import {FastifyInstance} from 'fastify';
+
+declare module 'fastify' {
+  export interface FastifyInstance {
+    config: any;
   }
 }
+
+export const name = 'config';
+expor const target = undefined; // Or just do not define this variable.
+export default config;
 ```
