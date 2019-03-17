@@ -45,9 +45,10 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
           fastify.use(plugin(fastify))
           break;
         case 'hooks':
+          fastify.addHook(plugin.event, plugin.default);
           break;
         case 'plugins':
-          fastify.register(plugin(fastify), opts);
+          fastify.register(plugin.default, plugin.opts);
           break;
         case 'parsers':
           break;

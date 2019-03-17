@@ -122,7 +122,7 @@ module.exports = fastify => {
         url: '/articles',
         method: 'GET'
         schema: {...},
-        async handler(req, res) {
+        async handler(request, reply) {
             ...
         }
     }
@@ -139,7 +139,7 @@ export = (fastify: fastify.FastifyInstance<Server, IncomingMessage, ServerRespon
         url: '/articles',
         method: 'GET'
         schema: {...},
-        async handler(req, res) {
+        async handler(request, reply) {
             ...
         }
     }
@@ -214,4 +214,69 @@ declare module 'fastify' {
 export const name = 'config';
 export const target = undefined; // Or just do not define this variable.
 export default config;
+```
+
+# Hooks
+
+## Register plugin
+
+*using `javascript`:*
+```javascript
+const path = require('path');
+const fastify = require('fastify');
+const Organizer = require('fastify-organizer');
+
+const server = fastify();
+
+server.register(Organizer, {
+    type: 'hooks',
+    dir: path.join(__dirname, 'decorators')
+});
+```
+
+*using `typescript`:*
+```typescript
+import path from 'path';
+import * as fastify from 'fastify'
+import * as fastifyOrganizer from 'fastify-organizer';
+
+const server = fastify();
+
+server.register(Organizer, {
+    type: 'hooks',
+    dir: path.join(__dirname, 'src/decorators')
+});
+```
+
+### Additional options
+
+These parameters are passed along with the export of the hook. See example below.
+
+| Name | Required? | Type | Description |
+|------|-----------|------|-------------|
+| `event` | **+** | string | Lifecycle event to which the hook will be connected |
+
+### Creating files
+
+*using `javascript`:*
+```javascript
+exports.event = 'onRequest';
+exports.default = function (request, reply, next) {
+  ...
+  next();
+};
+```
+
+*using `typescript`:*
+```typescript
+import * as fastify from 'fastify';
+import { Server, IncomingMessage, ServerResponse } from 'http';
+
+export const event = 'onRequest';
+const hook: fastify.FastifyMiddleware<Server, IncomingMessage, ServerResponse> = function (request, reply, next) {
+  ...
+  next();
+}
+
+export default hook;
 ```
