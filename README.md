@@ -10,6 +10,7 @@
     * [Hooks](#hooks)
     * [Plugins](#plugins)
     * [Content type parsers](#content-type-parsers)
+    * [Middlewares](#middlewares)
 
 # Why is this library need
 
