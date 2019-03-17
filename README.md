@@ -160,7 +160,7 @@ const server = fastify();
 
 server.register(Organizer, {
     type: 'decorators',
-    dir: path.join(__dirname, 'decorators/request')
+    dir: path.join(__dirname, 'decorators')
 });
 ```
 
@@ -174,7 +174,7 @@ const server = fastify();
 
 server.register(Organizer, {
     type: 'decorators',
-    dir: path.join(__dirname, 'src/decorators/request')
+    dir: path.join(__dirname, 'src/decorators')
 });
 ```
 
@@ -212,6 +212,6 @@ declare module 'fastify' {
 }
 
 export const name = 'config';
-expor const target = undefined; // Or just do not define this variable.
+export const target = undefined; // Or just do not define this variable.
 export default config;
 ```

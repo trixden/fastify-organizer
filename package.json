@@ -25,14 +25,13 @@
   },
   "homepage": "https://github.com/trixden/fastify-organizer#readme",
   "dependencies": {
-    "fastify-plugin": "1.5.0",
-    "glob": "7.1.3",
-    "steed": "1.1.3"
+    "fastify-plugin": "^1.5.0",
+    "glob": "^7.1.3"
   },
   "devDependencies": {
-    "@types/glob": "7.1.1",
-    "@types/node": "11.11.3",
-    "fastify": "2.0.1",
+    "@types/glob": "^7.1.1",
+    "@types/node": "^11.11.3",
+    "fastify": "^2.1.0",
     "typescript": "^3.3.3333"
   }
 }
