@@ -275,6 +275,12 @@ export default parser;
 
 ## Middlewares
 
+### Additional options
+
+| Name | Required? | Type | Description |
+|------|-----------|------|-------------|
+| `url` | - | string or array of strings | Define this property if you want the middleware above to work only under certain path(s). |
+
 ### Creating files
 
 *using `javascript`:*
