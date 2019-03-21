@@ -1,6 +1,6 @@
 {
   "name": "fastify-organizer",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Fastify file structure organizer",
   "main": "dist/index.js",
   "scripts": {
