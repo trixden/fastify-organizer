@@ -1,6 +1,6 @@
 {
   "name": "fastify-organizer",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Fastify file structure organizer",
   "main": "dist/index.js",
   "scripts": {
@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/trixden/fastify-organizer#readme",
   "dependencies": {
-    "fast-glob": "^2.2.6",
-    "fastify-plugin": "^1.5.0"
+    "fast-glob": "^2.2.7",
+    "fastify-plugin": "^1.6.0"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/node": "^11.11.3",
-    "fastify": "^2.1.0",
-    "typescript": "^3.3.3333"
+    "@types/node": "^11.13.21",
+    "fastify": "^2.8.0",
+    "typescript": "^3.6.3"
   }
 }
