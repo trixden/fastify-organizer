@@ -5,7 +5,7 @@ import fp from 'fastify-plugin';
 import {Server, IncomingMessage, ServerResponse} from 'http';
 
 interface OrganizerOpts {
-  type: 'routes' | 'decorators' | 'middlewares' | 'hooks' | 'plugins' | 'parsers',
+  type: 'routes' | 'decorators' | 'middlewares' | 'hooks' | 'plugins' | 'parsers' | 'schemas',
   dir: string,
   ignorePattern?: RegExp,
   prodDir?: string
@@ -55,6 +55,9 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
         break;
       case 'parsers':
         fastify.addContentTypeParser(plugin.type, plugin.opts);
+        break;
+      case 'schemas':
+        fastify.addSchema(plugin.default);
         break;
       default:
         break;
