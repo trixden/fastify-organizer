@@ -54,7 +54,7 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
         fastify.register(plugin.default, plugin.opts);
         break;
       case 'parsers':
-        fastify.addContentTypeParser(plugin.type, plugin.opts);
+        fastify.addContentTypeParser(plugin.type, plugin.default);
         break;
       case 'schemas':
         fastify.addSchema(plugin.default);
