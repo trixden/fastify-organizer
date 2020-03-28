@@ -18,7 +18,7 @@ This library will help you to organize the file structure in your project. Just 
 
 # Requirements
 
-* `fastify` = 2.1.x
+* `fastify` = 2.x.x
 
 # Getting started
 
@@ -99,35 +99,28 @@ Routing files are created according to the specification of the [full declaratio
 
 *using `javascript`:*
 ```javascript
-exports.default = fastify => {
-  return {
-    url: '/articles',
-    method: 'GET'
-    schema: {...},
-    async handler(request, reply) {
-        ...
-    }
+exports.default = {
+  url: '/articles',
+  method: 'GET'
+  schema: {...},
+  async handler(request, reply) {
+    ...
   }
 }
 ```
 
 *using `typescript`:*
 ```typescript
-import { FastifyInstance, RouteOptions } from 'fastify';
-import { Server, IncomingMessage, ServerResponse } from 'http';
+import { RouteOptions } from 'fastify';
 
-export default (fastify: FastifyInstance<Server, IncomingMessage, ServerResponse>) => {
-  const router: RouteOptions<Server, IncomingMessage, ServerResponse> = {
-    url: '/articles',
-    method: 'GET'
-    schema: {...},
-    async handler(request, reply) {
-        ...
-    }
+export default {
+  url: '/articles',
+  method: 'GET',
+  schema: {...},
+  async handler(request, reply) {
+    ...
   }
-
-  return router;
-}
+} as RouteOptions;
 ```
 
 ## Decorators
@@ -200,7 +193,7 @@ export const event = 'onRequest';
 const hook: fastify.FastifyMiddleware<Server, IncomingMessage, ServerResponse> = function (request, reply, next) {
   ...
   next();
-}
+};
 
 export default hook;
 ```
@@ -274,7 +267,7 @@ export const type = 'application/jsoff';
 
 const parser: ContentTypeParser<FastifyRequest<IncomingMessage>> = function (request, done) {
   done(null, request.body)
-}
+};
 
 export default parser;
 ```

@@ -27,7 +27,7 @@ const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, 
 
     switch (opts.type) {
       case 'routes':
-        fastify.route(plugin.default(fastify));
+        fastify.route(plugin.default);
         break;
       case 'decorators':
         if (plugin.target === 'request') {
