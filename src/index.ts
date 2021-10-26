@@ -2,7 +2,6 @@ import path from 'path';
 import glob from 'fast-glob';
 import * as fastify from 'fastify';
 import fp from 'fastify-plugin';
-import {Server, IncomingMessage, ServerResponse} from 'http';
 
 interface OrganizerOpts {
   type: 'routes' | 'decorators' | 'middlewares' | 'hooks' | 'plugins' | 'parsers' | 'schemas',
@@ -11,13 +10,13 @@ interface OrganizerOpts {
   prodDir?: string
 };
 
-const fastifyOrganizer: fastify.Plugin<Server, IncomingMessage, ServerResponse, OrganizerOpts> = async (fastify, opts) => {
+const fastifyOrganizer: fastify.FastifyPlugin<OrganizerOpts> = async (fastify, opts) => {
   const directory = (process.env.NODE_ENV !== 'production' || !opts.prodDir) ? opts.dir : opts.prodDir;
 
   const entries = await glob(path.join(directory, '/**/*.{js,ts}'));
 
   for (let entry of entries) {
-    const file = typeof entry === 'string' ? {path: entry} : {path: entry.path};
+    const file = typeof entry === 'string' ? {path: entry} : {path: entry};
 
     if (opts.ignorePattern && opts.ignorePattern.test(file.path)) return;
 

@@ -18,7 +18,7 @@ This library will help you to organize the file structure in your project. Just 
 
 # Requirements
 
-* `fastify` = 2.x.x
+* `fastify` = 3.x.x
 
 # Getting started
 
