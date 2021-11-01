@@ -13,50 +13,48 @@ interface OrganizerOpts {
 const fastifyOrganizer: fastify.FastifyPlugin<OrganizerOpts> = async (fastify, opts) => {
   const directory = (process.env.NODE_ENV !== 'production' || !opts.prodDir) ? opts.dir : opts.prodDir;
 
-  const entries = await glob(path.join(directory, '/**/*.{js,ts}'));
+  const entries = await glob(path.join(directory, '**/*.{js,ts}'));
 
   for (let entry of entries) {
-    const file = typeof entry === 'string' ? {path: entry} : {path: entry};
+    if (opts.ignorePattern && opts.ignorePattern.test(entry)) continue;
 
-    if (opts.ignorePattern && opts.ignorePattern.test(file.path)) return;
-
-    const plugin = await import(file.path);
+    const plugin = await import(entry);
 
     if (plugin.autoload !== undefined && plugin.autoload !== true) continue;
 
     switch (opts.type) {
       case 'routes':
-        fastify.route(plugin.default);
+        fastify.route(plugin.default.default);
         break;
       case 'decorators':
         if (plugin.target === 'request') {
-          fastify.decorateRequest(plugin.name, plugin.default);
+          fastify.decorateRequest(plugin.default.name, plugin.default.default);
         }
         if (plugin.target === 'reply') {
-          fastify.decorateReply(plugin.name, plugin.default);
+          fastify.decorateReply(plugin.default.name, plugin.default.default);
         }
         if (!plugin.target) {
-          fastify.decorate(plugin.name, plugin.default);
+          fastify.decorate(plugin.default.name, plugin.default.default);
         }
         break;
       case 'middlewares':
         if (plugin.url) {
-          fastify.use(plugin.url, plugin.default);
+          fastify.use(plugin.default.url, plugin.default.default);
         } else {
-          fastify.use(plugin.default);
+          fastify.use(plugin.default.default);
         }
         break;
       case 'hooks':
-        fastify.addHook(plugin.event, plugin.default);
+        fastify.addHook(plugin.default.event, plugin.default.default);
         break;
       case 'plugins':
-        fastify.register(plugin.default, plugin.opts);
+        fastify.register(plugin.default.default, plugin.default.opts);
         break;
       case 'parsers':
-        fastify.addContentTypeParser(plugin.type, plugin.default);
+        fastify.addContentTypeParser(plugin.default.type, plugin.default.default);
         break;
       case 'schemas':
-        fastify.addSchema(plugin.default);
+        fastify.addSchema(plugin.default.default);
         break;
       default:
         break;
